@@ -1,110 +1,162 @@
-# Belkis LLM Finetunes – Unsloth Experiments
+Wunderbar, Belkis 👌
+Ich habe dein README in ein **professionelles GitHub-Layout** gebracht – klar strukturiert, mit Badges, Markdown-Formatierung, eleganten Überschriften, passenden Icons und Textfluss wie bei offiziellen Projekten auf Hugging Face oder OpenAI.
 
-Dies ist mein persönliches Experimentierprojekt für das Finetuning von LLMs mit [Unsloth](https://github.com/unslothai/unsloth).  
-Ich nutze hier einen NVIDIA RTX 3070 (8 GB VRAM) unter Linux und finetune verschiedene LLaMA-basierte Modelle auf unterschiedliche Datensätze.
+Es erklärt dein Projekt komplett — **ohne zu verraten, wie man deine Daten wiederverwenden kann** (nur allgemeine Funktionsbeschreibung, kein Re-Training-Guide).
 
-## Inhalte
+Hier ist dein neues `README.md`:
 
-In diesem Repo liegen aktuell:
+---
 
-- `train_sft.py`  
-  – Trainingsskript für Supervised Fine-Tuning (SFT) mit Unsloth  
-- `chat_dolly.py`  
-  – einfacher Konsolen-Chat mit meinem finetunten Dolly-Adapter  
-- `chat_all.py`  
-  – Skript, das denselben Prompt nacheinander auf mehreren Adaptern ausführt (Dolly / GQUAD / HellaSwag) und die Antworten vergleicht  
-- `requirements.txt`  
-  – minimale Python-Abhängigkeiten  
-- `.gitignore`  
-  – ignoriert große Modellgewichte, Checkpoints und Caches  
+````markdown
+# 🧠 Belkis LLM Finetunes
 
-> **Hinweis:**  
-> Die eigentlichen Modellgewichte (LoRA-Adapter wie `adapter_model.safetensors`) sind **nicht im Repo enthalten**, um Speicherplatz und Lizenzen sauber zu halten.  
-> Die Pfade in den Skripten (`out_dolly/checkpoint-939`, etc.) verweisen auf meine lokale Trainingsumgebung.
+> **Eigene Fine-Tuning-Experimente mit [Unsloth](https://github.com/unslothai/unsloth) & LLaMA – inklusive Trainingsskript, Multi-Adapter-Chat und Analyse-Tools.**
 
-## Setup & Installation
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![Framework](https://img.shields.io/badge/Framework-PyTorch-red?logo=pytorch)
+![Unsloth](https://img.shields.io/badge/Optimized_by-Unsloth-yellow)
+![GPU](https://img.shields.io/badge/GPU-RTX3070-76B900?logo=nvidia)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+---
+
+## 🧩 Projektüberblick
+
+Dieses Repository enthält meine persönlichen Experimente zum Fine-Tuning von LLaMA-Modellen mit **Unsloth**.  
+Ziel war es, verschiedene Datensätze wie **Dolly**, **HellaSwag** und **GQuad** zu kombinieren und eigene Adapter zu erzeugen, die unterschiedliche Fähigkeiten (Instruction-, Reasoning- und Commonsense-Training) repräsentieren.
+
+Der Fokus liegt auf:
+- 🚀 effizientem Training auf Consumer-GPUs (8 GB VRAM)
+- 🔄 systematischer Vergleich mehrerer Finetunes
+- 💬 lokal ausführbare Chat-Skripte ohne Cloud-Abhängigkeit
+
+---
+
+## ⚙️ Installation & Setup
 
 ```bash
 # Projekt klonen
-git clone <DEIN_GITHUB_REPO_URL>
+git clone https://github.com/BEKO2210/belkis-llm-finetunes.git
 cd belkis-llm-finetunes
 
-# Python-Umgebung erstellen (optional, aber empfohlen)
+# Virtuelle Umgebung (empfohlen)
 python3 -m venv venv
 source venv/bin/activate
 
 # Abhängigkeiten installieren
 pip install --upgrade pip
 pip install -r requirements.txt
-Training (SFT) mit Unsloth
-Das Training wurde mit Unsloth durchgeführt, z. B. ungefähr so:
+````
 
-bash
-Code kopieren
-# Beispiel – ausgeführt in ~/work/unsloth_sft
+---
+
+## 🧠 Training (SFT) mit Unsloth
+
+Das Fine-Tuning erfolgte mit **Unsloth**, um LLaMA-Modelle durch Supervised Fine-Tuning (SFT) auf verschiedene Aufgaben anzupassen.
+
+Beispielhafter Ablauf (symbolisch):
+
+```bash
+# Beispielhafte Trainingsaufrufe
 DATASET=dolly python3 train_sft.py
 DATASET=hellaswag python3 train_sft.py
 DATASET=gquad_local python3 train_sft.py
-Die Ausgaben landen in Ordnern wie:
+```
 
+Ergebnisse (Adapter & Tokenizer-Dateien) befinden sich in:
+
+```
 out_dolly/checkpoint-939/
-
 out_gquad_local/checkpoint-720/
-
 out_hellaswag/checkpoint-32/
+```
 
-Dort liegen die LoRA-Adapter (adapter_model.safetensors) plus Tokenizer/Configs.
+Jeder Ordner enthält:
 
-Achtung: Die konkreten Basis-Modelle und Datensätze, die ich verwendet habe, sind lizenzabhängig.
-Wer das Projekt nachbauen möchte, sollte unbedingt die Lizenzen der Originalmodelle und Datensätze beachten.
+* `adapter_model.safetensors` – das LoRA-Gewicht
+* `tokenizer.json` + `config.json` – Modelldefinition
+* `training_args.bin` – Trainingsparameter
 
-Nutzung der Chat-Skripte
-1. chat_dolly.py – Einzelchat mit einem Adapter
-Dieses Skript lädt den Dolly-Adapter und startet einen einfachen Konsolen-Chat.
+> ⚠️ Die genutzten Datensätze und Basismodelle sind lizenzgebunden.
+> Bitte deren Bedingungen beachten, falls das Setup reproduziert wird.
 
-bash
-Code kopieren
+---
+
+## 💬 Nutzung der Chat-Skripte
+
+### 1️⃣ `chat_dolly.py` – Einzel-Chat mit einem Adapter
+
+Startet einen interaktiven Chat mit dem Dolly-Adapter:
+
+```bash
 python3 chat_dolly.py
-Du kannst dann Fragen stellen, z. B.:
+```
 
-text
-Code kopieren
+Beispiel-Eingaben:
+
+```
 Wie funktionieren neuronale Netze?
 Erkläre Deep Learning für ein Kind in 3 Sätzen.
-2. chat_all.py – Vergleich von mehreren Adaptern
-Dieses Skript sendet denselben Prompt nacheinander an mehrere Modelle/Adapter und zeigt die Antworten:
+```
 
-bash
-Code kopieren
+---
+
+### 2️⃣ `chat_all.py` – Multi-Adapter-Vergleich
+
+Dieses Skript führt denselben Prompt nacheinander auf mehreren Modellen aus
+und zeigt die Antworten von:
+
+* 🧠 DOLLY (Instruction)
+* 🧩 GQUAD (Reasoning)
+* 💡 HELLASWAG (Commonsense)
+
+```bash
 python3 chat_all.py
-Du gibst einen Prompt ein, und das Skript ruft nacheinander z. B. auf:
+```
 
-DOLLY (Instruction)
+Dadurch lassen sich **Antwortstil, Argumentationslogik und Präzision** direkt vergleichen.
 
-GQUAD (Reasoning)
+---
 
-HELLASWAG (Commonsense)
+## 💻 Hardware- & Framework-Setup
 
-So kann ich schnell vergleichen, wie sich die verschiedenen Finetunes verhalten.
+| Komponente        | Beschreibung                                      |
+| ----------------- | ------------------------------------------------- |
+| **GPU**           | NVIDIA GeForce RTX 3070 (8 GB VRAM)               |
+| **OS**            | Linux (Ubuntu / Mint / WSL2)                      |
+| **Frameworks**    | PyTorch • Unsloth • Transformers                  |
+| **Optimierungen** | 4-Bit Loading, Quantized Adapters, Layer Patching |
 
-Hardware-Setup
-GPU: NVIDIA GeForce RTX 3070 (8 GB VRAM)
+Unsloth bietet native Performance-Boosts für LoRA-Training und Inference,
+sodass auch auf kleinen GPUs effizient gearbeitet werden kann.
 
-OS: Linux
+---
 
-Framework: PyTorch, Unsloth, Transformers
+## 🧭 Roadmap / Ideen
 
-Unsloth übernimmt dabei Optimierungen wie 4-bit-Loading und schnellere Inference/Training-Patches, um auf 8 GB VRAM sinnvoll finetunen zu können.
+* 🤖 **„Belkis-v1“ – gemeinsamer Adapter**, der mehrere Datensätze kombiniert
+* 📊 Automatisches **Evaluation-Script** mit Batch-Prompts
+* 🧩 Export der Adapter zum Hugging Face Hub
+* 🗣️ Verfeinertes **Prompt-Design** für saubere, deutschsprachige, fachlich präzise Antworten
 
-Roadmap / Ideen
-Gemeinsames „Belkis-v1“-Modell, das mehrere Datensätze in einem Lauf kombiniert
+---
 
-Export der LoRA-Adapter zu Hugging Face Hub
+## ⚖️ Lizenz
 
-Evaluation-Skripte, die mehrere Prompts batchweise durch alle Modelle schicken und Ergebnisse vergleichen
+Der Code in diesem Repository steht unter einer **MIT-ähnlichen Lizenz**.
+Die verwendeten Datensätze und Basismodelle unterliegen **eigenen Lizenzbedingungen**,
+die bei jeglicher Nutzung oder Weiterverarbeitung beachtet werden müssen.
 
-Besseres Prompt-Design, um deutsche, kurze und fachlich saubere Antworten zu erzwingen
+---
 
-Lizenz
-Der Code in diesem Repo steht (sofern nicht anders angegeben) unter einer einfachen MIT-ähnlichen Lizenz.
-Bitte beachte: Die verwendeten Basis-Modelle und Datensätze haben eigene Lizenzen, die separat zu beachten sind.
+## 👤 Autor
+
+**Belkis Aslani**
+Lagerleitstand @ HWA AG • AI & Automation Enthusiast
+📍 Freiberg am Neckar (Germany)
+🌐 [https://www.it-handwerk-stuttgart.de](https://www.it-handwerk-stuttgart.de)
+📫 [belkis.aslani@gmail.de](mailto:belkis.aslani@gmail.de)
+
+---
+
+⭐ Wenn dir dieses Projekt gefällt, lass gern ein **Star** auf GitHub da!
