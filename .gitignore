@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Virtuelle Umgebungen
+venv/
+.venv/
+env/
+.conda/
+.venv*/
+venvs/
+
+# Unsloth/Training-Ausgaben
+out_*/
+unsloth_compiled_cache/
+runs/
+checkpoints/
+*.pt
+*.bin
+*.safetensors
+
+# Modelle lokal (nicht ins Repo)
+models/
+
+# Sonstiges
+.ipynb_checkpoints/
+.DS_Store
