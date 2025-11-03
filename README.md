@@ -1,9 +1,3 @@
-Perfekt 👍 Belkis — hier ist deine vollständige **README.md**, komplett sauber aufgebaut und so formatiert,
-dass **nur echter Code** in Codeboxen steht (bash, text, python etc.).
-Alles andere ist Fließtext, damit GitHub es schön rendert.
-
----
-
 # 🧠 Belkis LLM Finetunes
 
 > Persönliche Fine-Tuning-Experimente mit **Unsloth** & **LLaMA** – optimiert für Consumer-GPUs (RTX 3070 / 8 GB VRAM).
